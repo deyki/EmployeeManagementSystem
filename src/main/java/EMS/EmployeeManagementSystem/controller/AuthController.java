@@ -4,6 +4,7 @@ import EMS.EmployeeManagementSystem.error.InvalidPasswordException;
 import EMS.EmployeeManagementSystem.error.RoleNotFoundException;
 import EMS.EmployeeManagementSystem.models.auth.AuthBindingModel;
 import EMS.EmployeeManagementSystem.models.auth.AuthResponseModel;
+import EMS.EmployeeManagementSystem.models.message.ResponseMessage;
 import EMS.EmployeeManagementSystem.service.impl.AuthServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,17 +30,17 @@ public class AuthController {
     }
 
     @PostMapping("/createAdmin")
-    public ResponseEntity<String> createAdmin(@RequestBody AuthBindingModel authBindingModel) throws RoleNotFoundException {
+    public ResponseEntity<ResponseMessage> createAdmin(@RequestBody AuthBindingModel authBindingModel) throws RoleNotFoundException {
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.createAdmin(authBindingModel));
     }
 
     @PostMapping("/createEmployee")
-    public ResponseEntity<String> createEmployee(@RequestBody AuthBindingModel authBindingModel) throws RoleNotFoundException {
+    public ResponseEntity<ResponseMessage> createEmployee(@RequestBody AuthBindingModel authBindingModel) throws RoleNotFoundException {
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.createEmployee(authBindingModel));
     }
 
     @PostMapping("/createModerator")
-    public ResponseEntity<String> createModerator(@RequestBody AuthBindingModel authBindingModel) throws RoleNotFoundException {
+    public ResponseEntity<ResponseMessage> createModerator(@RequestBody AuthBindingModel authBindingModel) throws RoleNotFoundException {
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.createModerator(authBindingModel));
     }
 

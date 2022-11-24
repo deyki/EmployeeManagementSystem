@@ -5,6 +5,7 @@ import EMS.EmployeeManagementSystem.error.InvalidPasswordException;
 import EMS.EmployeeManagementSystem.error.RoleNotFoundException;
 import EMS.EmployeeManagementSystem.models.auth.AuthBindingModel;
 import EMS.EmployeeManagementSystem.models.auth.AuthResponseModel;
+import EMS.EmployeeManagementSystem.models.message.ResponseMessage;
 import EMS.EmployeeManagementSystem.repository.UserRepository;
 import EMS.EmployeeManagementSystem.security.JWTUtil;
 import EMS.EmployeeManagementSystem.service.AuthService;
@@ -48,7 +49,7 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public String createAdmin(AuthBindingModel authBindingModel) throws RoleNotFoundException {
+    public ResponseMessage createAdmin(AuthBindingModel authBindingModel) throws RoleNotFoundException {
         userRepository.findByUsername(authBindingModel.getUsername()).ifPresent(user -> {
             throw new EntityExistsException(String.format("User: %s already exist!", authBindingModel.getUsername()));
         });
@@ -63,12 +64,12 @@ public class AuthServiceImpl implements AuthService {
             throw new EntityExistsException("Admin account already exist!");
         }
 
-        return "Admin account created!";
+        return new ResponseMessage("Admin account created!");
     }
 
 
     @Override
-    public String createEmployee(AuthBindingModel authBindingModel) throws RoleNotFoundException {
+    public ResponseMessage createEmployee(AuthBindingModel authBindingModel) throws RoleNotFoundException {
         userRepository.findByUsername(authBindingModel.getUsername()).ifPresent(user -> {
             throw new EntityExistsException(String.format("User: %s already exist!", authBindingModel.getUsername()));
         });
@@ -78,12 +79,12 @@ public class AuthServiceImpl implements AuthService {
         user.setAuthorities(Sets.newHashSet(roleService.findByAuthority("EMPLOYEE")));
         userRepository.save(user);
 
-        return "Employee account created!";
+        return new ResponseMessage("Employee account created!");
     }
 
 
     @Override
-    public String createModerator(AuthBindingModel authBindingModel) throws RoleNotFoundException {
+    public ResponseMessage createModerator(AuthBindingModel authBindingModel) throws RoleNotFoundException {
         userRepository.findByUsername(authBindingModel.getUsername()).ifPresent(user -> {
             throw new EntityExistsException(String.format("User: %s already exist!", authBindingModel.getUsername()));
         });
@@ -93,7 +94,7 @@ public class AuthServiceImpl implements AuthService {
         user.setAuthorities(Sets.newHashSet(roleService.findByAuthority("MODERATOR")));
         userRepository.save(user);
 
-        return "Moderator account created!";
+        return new ResponseMessage("Moderator account created");
     }
 
 
