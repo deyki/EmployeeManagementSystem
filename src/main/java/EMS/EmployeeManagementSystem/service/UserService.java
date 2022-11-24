@@ -1,5 +1,6 @@
 package EMS.EmployeeManagementSystem.service;
 
+import EMS.EmployeeManagementSystem.error.InvalidPasswordException;
 import EMS.EmployeeManagementSystem.models.message.ResponseMessage;
 import EMS.EmployeeManagementSystem.models.user.PasswordBindingModel;
 import EMS.EmployeeManagementSystem.models.user.UserProfileDetailsBindingModel;
@@ -8,7 +9,7 @@ import EMS.EmployeeManagementSystem.models.user.UsernameBindingModel;
 
 public interface UserService {
 
-    ResponseMessage createUserProfileDetails(UserProfileDetailsBindingModel userProfileDetailsBindingModel);
+    ResponseMessage createUserProfileDetails(Long userID, UserProfileDetailsBindingModel userProfileDetailsBindingModel);
 
     UserResponseModel getUserById(Long userID);
 
@@ -16,5 +17,5 @@ public interface UserService {
 
     ResponseMessage updateUsernameById(Long userID, UsernameBindingModel usernameBindingModel);
 
-    ResponseMessage updatePasswordById(Long userID, PasswordBindingModel passwordBindingModel);
+    ResponseMessage updatePasswordById(Long userID, PasswordBindingModel passwordBindingModel) throws InvalidPasswordException;
 }
