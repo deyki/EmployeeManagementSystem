@@ -1,10 +1,12 @@
 package EMS.EmployeeManagementSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -34,6 +36,10 @@ public class User implements UserDetails {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "contract_id", referencedColumnName = "contractID")
     private Contract contract;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Task> tasks;
 
     @Override
     public boolean isAccountNonExpired() {
